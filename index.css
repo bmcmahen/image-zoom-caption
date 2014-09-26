@@ -1,0 +1,29 @@
+.Image-zoom-caption {
+  position: fixed;
+  text-align: center;
+  padding: 10px;
+  -webkit-animation-name: CaptionFadeIn;
+  animation-name: CaptionFadeIn;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+
+@-webkit-keyframes CaptionFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes CaptionFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
