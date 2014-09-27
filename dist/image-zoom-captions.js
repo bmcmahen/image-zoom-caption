@@ -96,36 +96,44 @@ module.exports = caption;
  * @param  {Object} opts
  */
 
-function caption(zoom, template) {
+function caption(template){
 
-  var el = document.createElement('div');
-  el.className = 'Image-zoom-caption';
-  template = template || zoom.thumb.getAttribute('alt');
+  return function(zoom){
 
-  // if no caption, just ignore
-  if (!template) return;
+    var el = document.createElement('div');
+    el.className ='Image-zoom-caption';
+    template = template || zoom.thumb.alt;
 
-  if (typeof template == 'String') el.innerHTML = template;
-  else el.appendChild(template);
+    // disable plugin if no template is available
+    if (!template) return;
 
-  // Listen for hide/show
-  zoom.on('shown', onShown);
-  zoom.on('position updated', updatePositions)
-  zoom.on('hiding', onHiding);
+    if (typeof template == 'string') el.innerHTML = template;
+    else el.appendChild(template);
 
-  function onShown() {
-    document.body.appendChild(el);
-  }
+    // Listen for hide/show
+    zoom.on('shown', onShown);
+    zoom.on('position updated', updatePositions)
+    zoom.on('hiding', onHiding);
 
-  function updatePositions() {
-    var s = el.style;
-    s.width = zoom.target.w + 'px';
-    s.left = zoom.target.x + 'px';
-    s.top = zoom.target.y + zoom.target.h + 'px';
-  }
+    // When image is shown, append template to body
+    function onShown() {
+      document.body.appendChild(el);
+    }
 
-  function onHiding() {
-    document.body.removeChild(el);
+    // update our caption position whenever our
+    // enlarged position changes
+    function updatePositions(target) {
+      var s = el.style;
+      s.width = target.w + 'px';
+      s.left = target.x + 'px';
+      s.top = target.y + target.h + 'px';
+    }
+
+    // When image is hidden, remove caption from DOM
+    function onHiding() {
+      document.body.removeChild(el);
+    }
+
   }
 
 }

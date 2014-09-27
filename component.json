@@ -2,7 +2,7 @@
   "name": "image-zoom-caption",
   "repo": "bmcmahen/image-zoom-caption",
   "description": "display an image caption plugin for image-zoom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {},
   "main": "index.js",
   "scripts": [
