@@ -26,14 +26,28 @@ function caption(template){
     else el.appendChild(template);
 
     // Listen for hide/show
+
+    zoom.on('showing', onShowing);
     zoom.on('shown', onShown);
     zoom.on('position updated', updatePositions);
     zoom.on('hiding', onHiding);
+    zoom.on('cancel', onCancel);
 
+    var cancelled = false;
     var showing = false;
+
+    function onShowing() {
+      cancelled = false;
+    }
+
+    function onCancel() {
+      cancelled = true;
+    }
 
     // When image is shown, append template to body
     function onShown() {
+      if (cancelled) return;
+      if (!zoom.isZoomed) return;
       showing = true;
       document.body.appendChild(el);
     }
