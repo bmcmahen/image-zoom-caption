@@ -27,11 +27,14 @@ function caption(template){
 
     // Listen for hide/show
     zoom.on('shown', onShown);
-    zoom.on('position updated', updatePositions)
+    zoom.on('position updated', updatePositions);
     zoom.on('hiding', onHiding);
+
+    var showing = false;
 
     // When image is shown, append template to body
     function onShown() {
+      showing = true;
       document.body.appendChild(el);
     }
 
@@ -39,16 +42,17 @@ function caption(template){
     // enlarged position changes
     function updatePositions(target) {
       var s = el.style;
-      s.width = target.w + 'px';
-      s.left = target.x + 'px';
       s.top = target.y + target.h + 'px';
+      s.height = (window.innerHeight - (target.y + target.h)) + 'px';
     }
 
     // When image is hidden, remove caption from DOM
     function onHiding() {
+      if (!showing) return;
+      showing = false;
       document.body.removeChild(el);
     }
 
-  }
+  };
 
 }
